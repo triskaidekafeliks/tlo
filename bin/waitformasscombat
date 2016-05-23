@@ -33,7 +33,7 @@ function perform_preevaluations
   # Common conditions are pre-evaluated here
   currenttime=$(date +%s)
 
-  if test_game_contents outofmission_check.png 1419 909
+  if test_game_contents outofmission_check.png $TEST_OUT_OF_MISSION
   then
     outofmission=1
   else
