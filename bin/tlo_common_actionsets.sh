@@ -18,7 +18,6 @@ interrupt_actions+=('
              test_game_contents citadel_cadaver_closure.png $TEST_CITADEL_CLOSURE ||
              test_game_contents cadaver_start_battle.png $TEST_CADAVER_STARTNEW"
   message="Detected completed cadaver battle"
-  repeattoclear=1
   action="xdo_and_return mousemove $CLICK_ATTACK_BOSS click 1"
 ')
 
