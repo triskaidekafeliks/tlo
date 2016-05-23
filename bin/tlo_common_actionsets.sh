@@ -40,6 +40,12 @@ interrupt_actions+=('
 ')
 
 interrupt_actions+=('
+  condition="test_game_contents citadel_premium_start.png $TEST_CITADEL_PREMIUM"
+  message="Dismiss premium citadel start"
+  action="xdo_and_return mousemove $CLICK_LEAVE_CITADEL"
+')
+
+interrupt_actions+=('
   condition="test_game_contents no_gifts.png $TEST_NO_GIFTS"
   message="Dismiss no gifts dialog..."
   action="xdo_and_return mousemove $CLICK_DISMISS_NO_GIFTS click 1"
