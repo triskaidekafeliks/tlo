@@ -42,7 +42,7 @@ interrupt_actions+=('
 interrupt_actions+=('
   condition="test_game_contents citadel_premium_start.png $TEST_CITADEL_PREMIUM"
   message="Dismiss premium citadel start"
-  action="xdo_and_return mousemove $CLICK_LEAVE_CITADEL"
+  action="xdo_and_return mousemove $CLICK_LEAVE_CITADEL click 1"
 ')
 
 interrupt_actions+=('
