@@ -1,0 +1,230 @@
+#!/bin/bash
+
+source runactionset.sh
+source tlo_common_actionsets.sh
+source tlo_cadavers.sh
+
+do_flights=1
+if [ "$1" == "--noflights" ]
+then
+  echo "Will skip MAA flights"
+  do_flights=0
+  shift
+fi
+
+idling_cadaver=$1
+idling_count=0
+
+game_left=0
+game_top=146
+game_width=1556
+game_height=862
+
+start_citadel_combats=0
+
+currenttime=$(date +%s)
+flightstime=$currenttime
+lastmccheck=0
+
+actions=()
+
+function perform_preevaluations
+{
+  # Common conditions are pre-evaluated here
+  currenttime=$(date +%s)
+
+  if test_game_contents outofmission_check.png 1419 909
+  then
+    outofmission=1
+  else
+    outofmission=0
+  fi
+}
+
+function populate_actions
+{
+  actions+=('
+    condition="(($do_flights)) && (($currenttime > $flightstime + 20 \* 60))"
+    message="Resending hero flights"
+    action="xdo_and_return key ctrl+Page_Up sleep 0.5; maa_check_flights; xdo_and_return key ctrl+Page_Down; flightstime=$(date +%s)"
+    clearwait=0
+  ')
+
+  actions+=('
+    condition="(($currenttime > $lastmccheck + 10)) &&
+               test_game_contents mc_timer_ready.png $TEST_MC_TIMER_READY_MIDDLE"
+    message="MC nearing readiness \\(from middle\\)"
+    action="
+      xdo_and_return mousemove $CLICK_MC_TIMER_READY_MIDDLE click 1;
+      lastmccheck=$(date +%s)
+  "')
+
+  actions+=('
+    condition="(($currenttime > $lastmccheck + 10)) &&
+               test_game_contents mc_timer_ready.png $TEST_MC_TIMER_READY_LEFT"
+    message="MC nearing readiness \\(left position\\)"
+    action="
+      xdo_and_return mousemove $CLICK_MC_TIMER_READY_LEFT click 1;
+      lastmccheck=$(date +%s)
+  "')
+
+  # Assumed to be in combat, and appear healthy enough to fight on
+  # This is placed fairly high up, to keep cadaver combat speedy
+  actions+=('
+    condition="test_game_contents health_segment.png $TEST_HEALTH_SEGMENT"
+    sqmessage="Kerpow-splat!"
+    action="xdo_and_return mousemove $CLICK_ATTACK_BOSS click 1"
+    clearwait=0
+  ')
+
+  # Try healing to continue
+  actions+=('
+    condition="test_game_contents bandage_usable.png $TEST_BANDAGE_USABLE"
+    message="Using bandage"
+    action="xdo_and_return mousemove $CLICK_USE_BANDAGE click 1"
+    clearwait=2
+  ')
+
+  actions+=('
+    condition="test_game_contents bandage_buyable.png $TEST_BANDAGE_BUYABLE"
+    sqmessage="Buying bandages"
+    action="xdo_and_return mousemove $CLICK_USE_BANDAGE click 1"
+  ')
+
+  actions+=('
+    condition="test_game_contents bandage_purchase_x5.png $TEST_BANDAGE_PURCHASE"
+    message="Buying bandages x5"
+    action="xdo_and_return mousemove $CLICK_BUY_BANDAGES click 1"
+  ')
+
+  # Knocked out.  Leave, so we can get on with something more useful
+  # than waiting around!
+#TODO: Break this into two tests/actions?
+#capture_rect 600 476 355 26 confirm_leave_battle.png
+#Yes button: x:652 y:654 screen:0 window:75497484
+  actions+=('
+    condition="test_game_contents died_in_mc.png $TEST_MC_DIED"
+    message="Leaving MC after knocked out"
+    action="
+      xdo_and_return mousemove $CLICK_MC_DEAD_EXIT click 1;
+      sleep 2;
+      xdo_and_return mousemove $CLICK_MC_CONFIRM_EXIT click 1
+  "')
+
+  # Would ideally select who to hit more carefully, but for now, just
+  # click all 6 slots in some sequence to keep things going.
+  # capture_rect 1413 156 134 264 /tmp/mc_enemy_array.png
+  actions+=('
+    condition="test_game_contents mc_your_turn.png $TEST_MC_YOUR_TURN"
+    sqmessage="Random strike!"
+    action="
+      xdo_and_return mousemove $CLICK_MC_ATTACK_LEFT $CLICK_MC_ATTACK_TOP click 1;
+      xdo_and_return mousemove $CLICK_MC_ATTACK_RIGHT $CLICK_MC_ATTACK_BOTTOM click 1;
+      xdo_and_return mousemove $CLICK_MC_ATTACK_LEFT $CLICK_MC_ATTACK_MIDDLE click 1;
+      xdo_and_return mousemove $CLICK_MC_ATTACK_RIGHT $CLICK_MC_ATTACK_MIDDLE click 1;
+      xdo_and_return mousemove $CLICK_MC_ATTACK_LEFT $CLICK_MC_ATTACK_BOTTOM click 1;
+      xdo_and_return mousemove $CLICK_MC_ATTACK_RIGHT $CLICK_MC_ATTACK_TOP click 1
+  "')
+
+  actions+=('
+    condition="test_game_contents mc_every_30min.png $TEST_MC_EVERY_30MIN"
+    message="Premature for MC"
+    action="xdo_and_return mousemove $CLICK_MC_LEAVE click 1"
+  ')
+
+  actions+=('
+    condition="test_game_contents mc_apply_button.png $TEST_MC_APPLY_BUTTON"
+    message="Applying for Mass Combat"
+    action="xdo_and_return mousemove $CLICK_MC_APPLY click 1"
+  ')
+
+  # TODO: Get rid of this?  Check on idling cadaver that we're outofmission should be sufficient?
+  # Do nothing while waiting for Mass Combat to start
+  #actions+=('
+  #  condition="test_game_contents mc_waiting.png 481 395"
+  #  message="Waiting for Mass Combat participants"
+  #  action=""
+  #')
+
+  actions+=('
+    condition="(($outofmission)) &&
+               test_game_contents cadaver_in_progress.png $TEST_CADAVER_SUSPENDED"
+    message="Resuming previously suspended battle"
+    action="xdo_and_return mousemove $CLICK_ATTACK_BOSS click 1"
+  ')
+
+  actions+=('
+    condition="(($start_citadel_combats)) && test_game_contents cit_ready.png $TEST_CITADEL_READY"
+    message="Opening citadel dialog on timer"
+    action="xdo_and_return mousemove $CLICK_CITADEL_READY click 1"
+  ')
+
+  actions+=('
+    condition="(($outofmission)) && test_game_contents mc_timer.png $TEST_CITADEL_BEGUN"
+    message="Looks like a citadel was begun"
+    action="
+      select_zone Downtown;
+      xdo_and_return mousemove $CLICK_DOWNTOWN_CITADEL click 1
+  "')
+
+  actions+=('
+    condition="test_game_contents cit_cannot_start.png $TEST_CITADEL_DISALLOWED"
+    message="Cannot start Citadel, so back out"
+    action="xdo_and_return mousemove $CLICK_LEAVE_CITADEL click 1"
+  ')
+
+  actions+=('
+    condition="test_game_contents fb_post_cancel.png $TEST_POST_TO_FACEBOOK"
+    message="Cancelling post to Facebook"
+    action="xdo_and_return mousemove $CLICK_CANCEL_FB_POST click 1"
+  ')
+
+  actions+=('
+    condition="test_game_contents citadel_join_button.png $TEST_CITADEL_JOIN"
+    message="Joining citadel combat"
+    action="xdo_and_return mousemove $CLICK_JOIN_CITADEL click 1"
+  ')
+
+  # There is a pause here to allow someone else to start a citadel cadaver battle.
+  # If that happens, then the mouse action will have no effect, and the next turn of
+  # the loop will find the Join button instead.
+  actions+=('
+    condition="(($start_citadel_combats)) && test_game_contents citadel_attack_button.png $TEST_CITADEL_ATTACK"
+    message="Prepping citadel"
+    action="
+        t_echo \"Pausing before citadel launch...\";
+        sleep 10;
+        xdo_and_return mousemove $CLICK_CITADEL_DROPDOWN click 1 sleep 0.5 mousemove CLICK_CITADEL_LOADERBOT click 1 sleep 0.5 mousemove $CLICK_CITADEL_ATTACK sleep 0.1 click 1
+  "')
+
+  # If nothing else doing, go start a regular cadaver combat
+  # Incrementing the count in the message like this is a bit icky, but provides a
+  # more accurate count compared with incrementing it in action.
+  actions+=('
+    condition="(($outofmission)) && [ -n \"$idling_cadaver\" ]"
+    message="Starting new idling cadaver $idling_cadaver \$((++idling_count))"
+    action="start_cadaver $idling_cadaver"
+    clearwait=0
+  ')
+
+  actions+=('
+    condition="(($outofmission))"
+    sqmessage="Cooling off..."
+    action="sleep 5"
+    clearwait=0
+  ')
+
+  actions+=("${interrupt_actions[@]}")
+
+# TODO: Look out for social network init failure message?
+}
+
+populate_actions
+while ! mouse_was_moved
+do
+  # If we're required to refresh, the action does an exit to reset state.
+  # Therefore run within a subshell in order remain in this script and reboot
+  # the process.
+  run_actions actions[@] perform_preevaluations
+done
+

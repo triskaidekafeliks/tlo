@@ -1,0 +1,130 @@
+#!/bin/bash
+
+interrupt_actions=()
+
+interrupt_actions+=('
+  condition="test_game_contents free_gifts.png $TEST_FREE_GIFTS"
+  message="Gifting grenades"
+  action="xdo_and_return mousemove $CLICK_SELECT_GRENADES click 1 sleep 0.2 mousemove $CLICK_SEND_GIFTS click 1"
+')
+
+# A cadaver fight finished.  Need to check for this in addition to the
+# check above, in case we left a cadaver fight to join MC, and it was
+# finished in absentia while we wait on the Join-MC dialog - otherwise
+# that would get obscured.
+interrupt_actions+=('
+  condition="test_game_contents cadaver_closure.png $TEST_CADAVER_VICTORY1 ||
+             test_game_contents cadaver_closure.png $TEST_CADAVER_VICTORY2 ||
+             test_game_contents citadel_cadaver_closure.png $TEST_CITADEL_CLOSURE ||
+             test_game_contents cadaver_start_battle.png $TEST_CADAVER_STARTNEW"
+  message="Detected completed cadaver battle"
+  repeattoclear=1
+  action="xdo_and_return mousemove $CLICK_ATTACK_BOSS click 1"
+')
+
+interrupt_actions+=('
+  condition="test_game_contents mc_finished_X.png $TEST_MC_FINISHED_WIN"
+  message="Finished MC \\(win\\)"
+  action="xdo_and_return mousemove $CLICK_MC_FINISHED_WIN click 1"
+')
+
+interrupt_actions+=('
+  condition="test_game_contents mc_finished_X.png $TEST_MC_FINISHED_DEFEAT"
+  message="Finished MC \\(defeat\\)"
+  action="xdo_and_return mousemove $CLICK_MC_FINISHED_DEFEAT click 1"
+')
+
+interrupt_actions+=('
+  condition="test_game_contents weapon_repair.png $TEST_WEAPON_BROKEN"
+  message="Repairing weapon"
+  action="xdo_and_return mousemove $CLICK_REPAIR_WEAPON click 1"
+')
+
+interrupt_actions+=('
+  condition="test_game_contents no_gifts.png $TEST_NO_GIFTS"
+  message="Dismiss no gifts dialog..."
+  action="xdo_and_return mousemove $CLICK_DISMISS_NO_GIFTS click 1"
+')
+
+interrupt_actions+=('
+  condition="test_game_contents phone_close.png $TEST_MOBILE_PHONE 0.01"
+  message="Dismiss mobile phone..."
+  action="xdo_and_return mousemove $CLICK_DISMISS_PHONE click 1"
+')
+
+interrupt_actions+=('
+  condition="test_game_contents killed_by_cadaver.png $TEST_YOU_DIED"
+  message="Dismiss \"You died\" dialog..."
+  action="xdo_and_return mousemove $CLICK_DISMISS_DEATH click 1"
+')
+ 
+interrupt_actions+=('
+  condition="test_game_contents help_others.png $TEST_HELP_OTHERS"
+  message="Helping other players"
+  action="xdo_and_return mousemove $CLICK_HELP_OTHERS"
+')
+
+interrupt_actions+=('
+  condition="test_game_contents send_requests.png $TEST_SEND_FB_REQUESTS"
+  message="Sending FB requests"
+  action="xdo_and_return mousemove $CLICK_SEND_FB_REQUESTS"
+')
+
+interrupt_actions+=('
+  condition="test_game_contents new_level.png $TEST_NEW_LEVEL"
+  message="Went up a level, yay!"
+  action="xdo_and_return mousemove $CLICK_NEW_LEVEL click 1"
+')
+
+interrupt_actions+=('
+  condition="test_game_contents survivors_diary.png $TEST_DAILY_MISSIONS"
+  message="Closing daily missions"
+  action="xdo_and_return mousemove $CLICK_CLOSE_DAILIES click 1"
+')
+
+# Sometimes the script manages to click somewhere it shouldn't, such as...
+
+# A location for clearing
+interrupt_actions+=('
+  condition="test_game_contents photo_pieces_found.png $TEST_PHOTO_PIECES_FOUND"
+  message="Clearing accidental location dialog..."
+  action="xdo_and_return mousemove $CLICK_DISMISS_LOCATION click 1"
+')
+
+# A business
+# TODO: Match rebuilt, destroyed and partially rebuilt!
+
+# Arena combat (wrong league)
+# TODO: Arena combat (correct league)
+interrupt_actions+=('
+  condition="test_game_contents to_your_league.png $TEST_GOTO_LEAGUE"
+  message="Clearing accidental arena dialog..."
+  action="xdo_and_return mousemove $CLICK_DISMISS_ARENA click 1"
+')
+
+# First click after down keys is to close the news page, but there might be a gold
+# sale, so second click gets rid of that - then we need to actually close
+# the news page!
+interrupt_actions+=('
+  condition="test_game_contents flash_crash.png $TEST_FLASH_CRASH"
+  message="Flash crashed!  Reloading..."
+  finalaction=1
+  action="
+    xdo_and_return mousemove $CLICK_FLASH_CRASH_RELOAD click 1 sleep 0.1;
+    xdo_and_return key ctrl+Page_Up sleep 0.5 mousemove $CLICK_FLASH_CRASH_RELOAD click 1 sleep 0.1;
+    sleep 20;
+    xdo_and_return mousemove $CLICK_MAA_CLOSE_MESSAGES click 1 sleep 1;
+    xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 1 sleep 0.1 key Down key Down key Down key Down sleep 0.1;
+    xdo_and_return mousemove $CLICK_MAA_DISMISS_NEWS click 1 sleep 0.1;
+    xdo_and_return mousemove $CLICK_MAA_DISMISS_GOLD_SALE click 1 sleep 0.1;
+    xdo_and_return mousemove $CLICK_MAA_DISMISS_NEWS click 1 sleep 0.1;
+    xdo_and_return key ctrl+Page_Down sleep 0.1;
+    xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 1 sleep 0.1 click 5 click 5;
+"')
+
+interrupt_actions+=('
+  condition="test_game_contents refresh_button.png $TEST_REFRESH_REQUEST"
+  message="Refresh requested..."
+  action="xdo_and_return mousemove $CLICK_ACCEPT_REFRESH click 1; exit 2"
+')
+
