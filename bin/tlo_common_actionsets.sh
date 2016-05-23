@@ -94,12 +94,12 @@ interrupt_actions+=('
 # TODO: Match rebuilt, destroyed and partially rebuilt!
 
 # Arena combat (wrong league)
-# TODO: Arena combat (correct league)
 interrupt_actions+=('
   condition="test_game_contents to_your_league.png $TEST_GOTO_LEAGUE"
   message="Clearing accidental arena dialog..."
   action="xdo_and_return mousemove $CLICK_DISMISS_ARENA click 1"
 ')
+# TODO: Arena combat (correct league)
 
 # First click after down keys is to close the news page, but there might be a gold
 # sale, so second click gets rid of that - then we need to actually close
