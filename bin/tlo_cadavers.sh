@@ -142,14 +142,14 @@ function select_zone
     select_zone_actions+=('
       condition="((\$in_select_map)) && ((\$current_zone_index > $destination_index))"
       sqmessage="Shifting left"
-      action="xdo_and_return mousemove $CLICK_ZONES_LEFT_SHIFT click 1 sleep 0.1"
+      action="xdo_and_return mousemove $CLICK_ZONES_LEFT_SHIFT click 1 sleep 1"
       repeattoclear=1
     ')
 
     select_zone_actions+=('
       condition="((\$in_select_map)) && ((\$current_zone_index < $destination_index - 1))"
       sqmessage="Shifting right"
-      action="xdo_and_return mousemove $CLICK_ZONES_RIGHT_SHIFT click 1 sleep 0.1"
+      action="xdo_and_return mousemove $CLICK_ZONES_RIGHT_SHIFT click 1 sleep 1"
       repeattoclear=1
     ')
 
