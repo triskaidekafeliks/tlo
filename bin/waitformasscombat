@@ -150,7 +150,7 @@ function populate_actions
     condition="(($outofmission)) &&
                test_game_contents cadaver_in_progress.png $TEST_CADAVER_SUSPENDED"
     message="Resuming previously suspended battle"
-    action="xdo_and_return mousemove $CLICK_ATTACK_BOSS click 1"
+    action="xdo_and_return mousemove $CLICK_RESUME_CADAVER click 1"
   ')
 
   actions+=('
