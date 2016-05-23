@@ -98,6 +98,12 @@ interrupt_actions+=('
 
 # A business
 # TODO: Match rebuilt, destroyed and partially rebuilt!
+#Fully built - resource exchange notice
+interrupt_actions+=('
+  condition="test_game_contents resource_exchange.png $TEST_RESOURCE_EXCHANGE"
+  message="Dismissing full-grown business"
+  action="xdo_and_return mousemove $CLICK_DISMISS_BUSINESS click 1"
+')
 
 # Arena combat (wrong league)
 interrupt_actions+=('
