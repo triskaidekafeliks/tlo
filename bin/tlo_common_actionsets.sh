@@ -139,3 +139,9 @@ interrupt_actions+=('
   action="xdo_and_return mousemove $CLICK_ACCEPT_REFRESH click 1; exit 2"
 ')
 
+interrupt_actions+=('
+  condition="test_game_contents missing_social_fun.png $TEST_MISSING_SOCIAL_FUN"
+  message="Dismiss missing fun reminder..."
+  action="xdo_and_return mousemove $CLICK_MISS_FUN click 1"
+')
+
