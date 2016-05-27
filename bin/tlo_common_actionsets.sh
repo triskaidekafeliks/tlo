@@ -125,6 +125,13 @@ interrupt_actions+=('
   action="xdo_and_return mousemove $CLICK_DISMISS_ARENA click 1"
 ')
 
+# Mission details dialog
+interrupt_actions+=('
+  condition="test_game_contents mission_continue_button.png $TEST_MISSION_DETAILS"
+  message="Clearing mission details..."
+  action="xdo_and_return mousemove $CLICK_MISSION_CONTINUE click 1"
+')
+
 # First click after down keys is to close the news page, but there might be a gold
 # sale, so second click gets rid of that - then we need to actually close
 # the news page!
