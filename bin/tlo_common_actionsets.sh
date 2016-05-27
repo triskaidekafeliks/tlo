@@ -117,7 +117,13 @@ interrupt_actions+=('
   message="Clearing accidental arena dialog..."
   action="xdo_and_return mousemove $CLICK_DISMISS_ARENA click 1"
 ')
-# TODO: Arena combat (correct league)
+
+# Arena combat (correct league)
+interrupt_actions+=('
+  condition="test_game_contents arena_battle_button.png $TEST_ARENA_BATTLE"
+  message="Clearing (correct) accidental arena dialog..."
+  action="xdo_and_return mousemove $CLICK_DISMISS_ARENA click 1"
+')
 
 # First click after down keys is to close the news page, but there might be a gold
 # sale, so second click gets rid of that - then we need to actually close
