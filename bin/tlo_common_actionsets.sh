@@ -97,14 +97,13 @@ interrupt_actions+=('
 ')
 
 # A business
-# Partially rebuilt - rebuild button
+# Not fully rebuilt - rebuild button
 interrupt_actions+=('
   condition="test_game_contents rebuild_business_button.png $TEST_REBUILD_BUTTON"
   message="Dismissing growing business"
   action="xdo_and_return mousemove $CLICK_DISMISS_BUSINESS click 1"
 ')
 
-# TODO: Match rebuilt, destroyed and partially rebuilt!
 #Fully built - resource exchange notice
 interrupt_actions+=('
   condition="test_game_contents resource_exchange.png $TEST_RESOURCE_EXCHANGE"
