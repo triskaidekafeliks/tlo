@@ -121,7 +121,7 @@ interrupt_actions+=('
 # Arena combat (correct league)
 interrupt_actions+=('
   condition="test_game_contents arena_battle_button.png $TEST_ARENA_BATTLE"
-  message="Clearing (correct) accidental arena dialog..."
+  message="Clearing \\(correct\\) accidental arena dialog..."
   action="xdo_and_return mousemove $CLICK_DISMISS_ARENA click 1"
 ')
 
