@@ -125,6 +125,13 @@ interrupt_actions+=('
   action="xdo_and_return mousemove $CLICK_DISMISS_ARENA click 1"
 ')
 
+# Devastator
+interrupt_actions+=('
+  condition="test_game_contents devastator.png $TEST_DEVASTATOR"
+  message="Dismissing Devastator..."
+  action="xdo_and_return mousemove $CLICK_DISMISS_DEVASTATOR click 1"
+')
+
 # Mission details dialog (different coordinates for one/two objectives)
 interrupt_actions+=('
   condition="test_game_contents mission_continue_button.png $TEST_MISSION_DETAILS"
