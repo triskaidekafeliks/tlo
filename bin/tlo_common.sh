@@ -1,4 +1,4 @@
-environment=/home/bmb/personal/tlo.bumf/bmb-ubu-l
+environment=/home/bmb/tlo/flash-vm
 
 source "$environment/coords.sh"
 
