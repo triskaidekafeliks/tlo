@@ -5,7 +5,12 @@ interrupt_actions=()
 interrupt_actions+=('
   condition="test_game_contents free_gifts.png $TEST_FREE_GIFTS"
   message="Gifting grenades"
-  action="xdo_and_return mousemove $CLICK_SELECT_GRENADES click 1 sleep 0.2 mousemove $CLICK_SEND_GIFTS click 1"
+  action="xdo_and_return mousemove $CLICK_SELECT_GRENADES click 1"
+')
+ interrupt_actions+=('
+  condition="test_game_contents send_gift.png $TEST_SEND_GIFT"
+  message="Sending the gifts"
+  action="xdo_and_return mousemove $CLICK_SEND_GIFTS click 1"
 ')
 
 # A cadaver fight finished.  Need to check for this in addition to the
@@ -66,13 +71,19 @@ interrupt_actions+=('
 interrupt_actions+=('
   condition="test_game_contents help_others.png $TEST_HELP_OTHERS"
   message="Helping other players"
-  action="xdo_and_return mousemove $CLICK_HELP_OTHERS"
+  action="xdo_and_return mousemove $CLICK_HELP_OTHERS click 1"
+')
+
+interrupt_actions+=('
+  condition="test_game_contents help_friends.png $TEST_HELP_FRIENDS"
+  message="Not helping friends automatically"
+  action="xdo_and_return mousemove $CLICK_DISMISS_HELP_FRIENDS click 1"
 ')
 
 interrupt_actions+=('
   condition="test_game_contents send_requests.png $TEST_SEND_FB_REQUESTS"
   message="Sending FB requests"
-  action="xdo_and_return mousemove $CLICK_SEND_FB_REQUESTS"
+  action="xdo_and_return mousemove $CLICK_SEND_FB_REQUESTS click 1"
 ')
 
 interrupt_actions+=('
