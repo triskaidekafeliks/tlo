@@ -93,6 +93,12 @@ interrupt_actions+=('
 ')
 
 interrupt_actions+=('
+  condition="test_game_contents drone_level_up.png $TEST_DRONE_LEVEL_UP"
+  message="Drone went up a level, yay!"
+  action="xdo_and_return mousemove $CLICK_DRONE_LEVELLED click 1"
+')
+
+interrupt_actions+=('
   condition="test_game_contents survivors_diary.png $TEST_DAILY_MISSIONS"
   message="Closing daily missions"
   action="xdo_and_return mousemove $CLICK_CLOSE_DAILIES click 1"
