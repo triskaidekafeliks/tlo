@@ -75,6 +75,12 @@ interrupt_actions+=('
 ')
 
 interrupt_actions+=('
+  condition="test_game_contents send_golden_strongbox.png $TEST_SEND_STRONGBOX"
+  message="Sending golden strongboxes"
+  action="xdo_and_return mousemove $CLICK_SEND_STRONGBOX click 1"
+')
+
+interrupt_actions+=('
   condition="test_game_contents help_friends.png $TEST_HELP_FRIENDS"
   message="Not helping friends automatically"
   action="xdo_and_return mousemove $CLICK_DISMISS_HELP_FRIENDS click 1"
