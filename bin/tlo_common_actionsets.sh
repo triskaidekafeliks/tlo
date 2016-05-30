@@ -162,7 +162,7 @@ interrupt_actions+=('
 ')
 
 interrupt_actions+=('
-  condition="test_game_contents special_offer_closure.png $TEST_SPECIAL_OFFER"
+  condition="test_game_contents special_offer_closure.png $TEST_SPECIAL_OFFER 0.01"
   message="Dismissing special offer dialog..."
   action="xdo_and_return mousemove $CLICK_CLOSE_SPECIAL_OFFER click 1"
 ')
