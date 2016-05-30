@@ -161,6 +161,12 @@ interrupt_actions+=('
   action="xdo_and_return mousemove $CLICK_CLOSE_SHOP click 1"
 ')
 
+interrupt_actions+=('
+  condition="test_game_contents special_offer_closure.png $TEST_SPECIAL_OFFER"
+  message="Dismissing special offer dialog..."
+  action="xdo_and_return mousemove $CLICK_CLOSE_SPECIAL_OFFER click 1"
+')
+
 # Mission details dialog (different coordinates for one/two objectives)
 interrupt_actions+=('
   condition="test_game_contents mission_continue_button.png $TEST_MISSION_DETAILS"
