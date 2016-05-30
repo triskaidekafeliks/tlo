@@ -156,7 +156,7 @@ interrupt_actions+=('
 ')
 
 interrupt_actions+=('
-  condition="test_game_contents shop_eq_tab.png $TEST_SHOP"
+  condition="test_game_contents shop_help.png $TEST_SHOP"
   message="Dismissing store..."
   action="xdo_and_return mousemove $CLICK_CLOSE_SHOP click 1"
 ')
