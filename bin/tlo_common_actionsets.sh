@@ -179,6 +179,13 @@ interrupt_actions+=('
   action="xdo_and_return mousemove $CLICK_MISSION_CONTINUE_TWO click 1"
 ')
 
+interrupt_actions+=('
+  condition="test_game_contents rebuild_base.png $TEST_REBUILD_BASE ||
+             test_game_contents level_required.png $TEST_REBUILD_LEVEL_REQ"
+  message="Dismissing base rebuild dialog..."
+  action="xdo_and_return mousemove $CLICK_CLOSE_BASE_REBUILD click 1"
+')
+
 # First click after down keys is to close the news page, but there might be a gold
 # sale, so second click gets rid of that - then we need to actually close
 # the news page!
