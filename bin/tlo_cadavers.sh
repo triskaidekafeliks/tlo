@@ -354,7 +354,8 @@ function start_cadaver
   if [ -n "$swipe_start" ]
   then
     battle_actions+=('
-      condition="test_game_contents home_flag.png $TEST_HOME_CENTRED 0.06"
+      condition="test_game_contents home_flag.png $TEST_HOME_CENTRED ||
+                 test_game_contents home_flag_shrouded.png $TEST_HOME_CENTRED"
       sqmessage="Bringing cadaver location into view"
       action="xdo_and_return mousemove $swipe_start mousedown 1 mousemove $swipe_end mouseup 1"
     ')
