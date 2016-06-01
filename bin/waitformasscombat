@@ -46,7 +46,7 @@ function populate_actions
   actions+=('
     condition="(($do_flights)) && (($currenttime > $flightstime + 20 \* 60))"
     message="Resending hero flights"
-    action="xdo_and_return key ctrl+Page_Up sleep 0.5; maa_check_flights; xdo_and_return key ctrl+Page_Down; flightstime=$(date +%s)"
+    action="xdo_and_return key ctrl+Page_Up sleep 0.5; maa_check_flights; xdo_and_return key ctrl+Page_Down; flightstime=$(($(date +%s) + 10))"
     clearwait=0
   ')
 
