@@ -200,10 +200,13 @@ function populate_actions
   # If nothing else doing, go start a regular cadaver combat
   # Incrementing the count in the message like this is a bit icky, but provides a
   # more accurate count compared with incrementing it in action.
+  # Sleep after start_cadaver call is to give the health segment a chance to
+  # appear.  Otherwise we were typically hitting that check too early and
+  # running through the whole gamut of interrupt actions.
   actions+=('
     condition="(($outofmission)) && [ -n \"$idling_cadaver\" ]"
     message="Starting new idling cadaver $idling_cadaver \$((++idling_count))"
-    action="start_cadaver $idling_cadaver"
+    action="start_cadaver $idling_cadaver; sleep 1"
     clearwait=0
   ')
 
