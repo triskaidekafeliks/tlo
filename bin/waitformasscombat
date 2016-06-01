@@ -39,6 +39,8 @@ function perform_preevaluations
   else
     outofmission=0
   fi
+
+  deduce_zone_index
 }
 
 function populate_actions
@@ -48,6 +50,56 @@ function populate_actions
     message="Resending hero flights"
     action="xdo_and_return key ctrl+Page_Up sleep 0.5; maa_check_flights; xdo_and_return key ctrl+Page_Down; flightstime=$(($(date +%s) + 10))"
     clearwait=0
+  ')
+
+  # Shifting actions have an extra short sleep, to minimise the risk of over-shifting
+  actions+=('
+    condition="((\$in_select_map)) && ((\$current_zone_index > \$destination_index))"
+    sqmessage="Shifting left"
+    action="xdo_and_return mousemove $CLICK_ZONES_LEFT_SHIFT click 1 sleep 1"
+    repeattoclear=1
+  ')
+  actions+=('
+    condition="((\$in_select_map)) && ((\$current_zone_index < \$destination_index - 1))"
+    sqmessage="Shifting right"
+    action="xdo_and_return mousemove $CLICK_ZONES_RIGHT_SHIFT click 1 sleep 1"
+    repeattoclear=1
+  ')
+
+  actions+=('
+    condition="((\$in_select_map)) && ((\$current_zone_index == \$destination_index))"
+    sqmessage="Selecting left"
+    action="xdo_and_return mousemove $CLICK_ZONES_LEFT_SELECT click 1;
+            present_zone=\$destination_index"
+  ')
+
+  actions+=('
+    condition="((\$in_select_map)) && ((\$current_zone_index == \$destination_index - 1))"
+    sqmessage="Selecting right"
+    action="xdo_and_return mousemove $CLICK_ZONES_RIGHT_SELECT click 1;
+            present_zone=\$destination_index"
+  ')
+
+  actions+=('
+    condition="[ -n \"$swipe_start\" ] &&
+               (test_game_contents home_flag.png $TEST_HOME_CENTRED ||
+                test_game_contents home_flag_shrouded.png $TEST_HOME_CENTRED)"
+    sqmessage="Bringing cadaver location into view"
+    action="xdo_and_return mousemove $swipe_start mousedown 1 mousemove $swipe_end mouseup 1; unset swipe_start"
+  ')
+
+  actions+=('
+    condition="[ -n \"$click_location\" ] &&
+               test_game_contents outofmission_check.png $TEST_OUT_OF_MISSION"
+    sqmessage="Clicking cadaver location"
+    action="xdo_and_return mousemove $click_location click 1; unset click_location"
+  ')
+
+  actions+=('
+    condition="(($starting_cadaver)) &&
+               test_game_contents cadaver_start_battle.png $TEST_CADAVER_STARTNEW"
+    sqmessage="Starting cadaver battle"
+    action="xdo_and_return mousemove $CLICK_CADAVER_START_NEW click 1; starting_cadaver=0"
   ')
 
   actions+=('
@@ -95,6 +147,17 @@ function populate_actions
     condition="test_game_contents bandage_purchase_x5.png $TEST_BANDAGE_PURCHASE"
     message="Buying bandages x5"
     action="xdo_and_return mousemove $CLICK_BUY_BANDAGES click 1"
+  ')
+
+  actions+=('
+    condition="test_game_contents cadaver_attack.png $TEST_CADAVER_ATTACK_GEARDROP"
+    sqmessage="Attacking with gear"
+    action="xdo_and_return mousemove $CLICK_CADAVER_ATTACK_GEARDROP click 1"
+  ')
+  actions+=('
+    condition="test_game_contents cadaver_attack_small.png $TEST_CADAVER_ATTACK_NOGEAR"
+    sqmessage="Attacking without gear"
+    action="xdo_and_return mousemove $CLICK_CADAVER_ATTACK_NOGEAR click 1"
   ')
 
   # Knocked out.  Leave, so we can get on with something more useful
@@ -162,10 +225,8 @@ function populate_actions
   actions+=('
     condition="(($outofmission)) && test_game_contents mc_timer.png $TEST_CITADEL_BEGUN"
     message="Looks like a citadel was begun"
-    action="
-      select_zone Downtown;
-      xdo_and_return mousemove $CLICK_DOWNTOWN_CITADEL click 1
-  "')
+    action="goto_downtown_citadel"
+  ')
 
   actions+=('
     condition="test_game_contents cit_cannot_start.png $TEST_CITADEL_DISALLOWED"
@@ -206,8 +267,7 @@ function populate_actions
   actions+=('
     condition="(($outofmission)) && [ -n \"$idling_cadaver\" ]"
     message="Starting new idling cadaver $idling_cadaver \$((++idling_count))"
-    action="start_cadaver $idling_cadaver; sleep 1"
-    clearwait=0
+    action="start_cadaver $idling_cadaver"
   ')
 
   actions+=('
