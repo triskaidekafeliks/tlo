@@ -162,6 +162,12 @@ interrupt_actions+=('
 ')
 
 interrupt_actions+=('
+  condition="test_game_contents new_items.png $TEST_NEW_ITEMS"
+  message="Accepting new items..."
+  action="xdo_and_return mousemove $CLICK_ACCEPT_NEW_ITEMS click 1"
+')
+
+interrupt_actions+=('
   condition="test_game_contents special_offer_closure.png $TEST_SPECIAL_OFFER 0.01"
   message="Dismissing special offer dialog..."
   action="xdo_and_return mousemove $CLICK_CLOSE_SPECIAL_OFFER click 1"
