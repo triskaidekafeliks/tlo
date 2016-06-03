@@ -213,9 +213,9 @@ interrupt_actions+=('
 "')
 
 interrupt_actions+=('
-  condition="test_game_contents refresh_button.png $TEST_REFRESH_REQUEST"
-  message="Refresh requested..."
-  action="xdo_and_return mousemove $CLICK_ACCEPT_REFRESH click 1; exit 2"
+  condition="test_game_contents connection_lost.png $TEST_CONNECTION_LOST"
+  message="Connection lost..."
+  action="xdo_and_return mousemove $CLICK_ACCEPT_REFRESH click 1"
 ')
 
 interrupt_actions+=('
