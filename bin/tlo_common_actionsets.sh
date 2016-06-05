@@ -224,3 +224,9 @@ interrupt_actions+=('
   action="xdo_and_return mousemove $CLICK_MISS_FUN click 1"
 ')
 
+interrupt_actions+=('
+  condition="test_game_contents cadaver_already_defeated.png $TEST_CADAVER_ALREADY_DEFEATED"
+  message="Cadaver already defeated, oh well"
+  action="xdo_and_return mousemove $CLICK_CADAVER_ALREADY_DEFEATED click 1"
+')
+
