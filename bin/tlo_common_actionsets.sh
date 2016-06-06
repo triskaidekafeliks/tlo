@@ -7,7 +7,7 @@ interrupt_actions+=('
   message="Gifting grenades"
   action="xdo_and_return mousemove $CLICK_SELECT_GRENADES click 1"
 ')
- interrupt_actions+=('
+interrupt_actions+=('
   condition="test_game_contents send_gift.png $TEST_SEND_GIFT"
   message="Sending the gifts"
   action="xdo_and_return mousemove $CLICK_SEND_GIFTS click 1"
@@ -74,6 +74,14 @@ interrupt_actions+=('
   action="xdo_and_return mousemove $CLICK_HELP_OTHERS click 1"
 ')
 
+interrupt_actions+=('
+  condition="test_game_contents strongbox_no_recips.png $TEST_STRONGBOX_TO_NOONE"
+  message="Restart after duff strongbox popup"
+  action="
+    xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 1 key ctrl+F5;
+    sleep 20;
+    xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 1 sleep 0.1 click 5 click 5;
+"')
 interrupt_actions+=('
   condition="test_game_contents send_golden_strongbox.png $TEST_SEND_STRONGBOX"
   message="Sending golden strongboxes"
