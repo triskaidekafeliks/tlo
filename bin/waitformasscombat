@@ -150,6 +150,12 @@ function populate_actions
   ')
 
   actions+=('
+    condition="test_game_contents buy_5_button.png $TEST_BUY_5_STUFFS"
+    message="Buying 5 of some shit"
+    action="xdo_and_return mousemove $CLICK_BUY_5_STUFFS click 1"
+  ')
+
+  actions+=('
     condition="test_game_contents cadaver_attack.png $TEST_CADAVER_ATTACK_GEARDROP"
     sqmessage="Attacking with gear"
     action="xdo_and_return mousemove $CLICK_CADAVER_ATTACK_GEARDROP click 1"
