@@ -261,7 +261,7 @@ function populate_actions
     action="
         t_echo \"Pausing before citadel launch...\";
         sleep 1;
-        xdo_and_return mousemove $CLICK_CITADEL_DROPDOWN click 1 sleep 0.5 mousemove $CLICK_CITADEL_LOADERBOT click 1 sleep 0.5 mousemove $CLICK_CITADEL_ATTACK click 1
+        xdo_and_return mousemove $CLICK_CITADEL_DROPDOWN click 1 sleep 0.5 mousemove $CLICK_CITADEL_MURRAIN click 1 sleep 0.5 mousemove $CLICK_CITADEL_ATTACK click 1
   "')
 
   # If nothing else doing, go start a regular cadaver combat
