@@ -101,6 +101,12 @@ interrupt_actions+=('
 ')
 
 interrupt_actions+=('
+  condition="test_game_contents take_rewards.png $TEST_MISSION_REWARDS"
+  message="Accepting mission rewards"
+  action="xdo_and_return mousemove $CLICK_MISSION_REWARDS click 1"
+')
+
+interrupt_actions+=('
   condition="test_game_contents new_level.png $TEST_NEW_LEVEL"
   message="Went up a level, yay!"
   action="xdo_and_return mousemove $CLICK_NEW_LEVEL click 1"
