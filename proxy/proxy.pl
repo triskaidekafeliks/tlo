@@ -300,9 +300,13 @@ my $HTTP_1_1 = _http_version("HTTP/1.1");
 #  I wanted to inherit from HTTP::Daemon::ClientConn
 #  but I wanted it to inherit from IO::Socket::SSL
 use vars qw($AUTOLOAD);
-my $caller = __PACKAGE__;
 
 sub AUTOLOAD {
+  my $caller = __PACKAGE__;
+  if (!defined($caller))
+  {
+    $caller = "NoPackage";
+  }
   $AUTOLOAD =~ s/^.*:://;
   no strict 'refs';
   # make sure the subroutine exists to alias
