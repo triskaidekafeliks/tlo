@@ -51,7 +51,10 @@ sub main {                      # return void
   use HTTP::Daemon;
   my %kids;
 
-  my $master = HTTP::Daemon->new(LocalPort => $PORT, LocalAddr => $HOST)
+  my $master = HTTP::Daemon->new(LocalPort => $PORT,
+                                 LocalAddr => $HOST,
+                                 ReuseAddr => 1,
+                                 ReusePort => 1)
       or die "Cannot create master: $!";
   warn("master is ", $master->url);
   ## fork the right number of children
