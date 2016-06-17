@@ -37,10 +37,7 @@ my $PORT = $ARGV[1] || 8080;    # pick next available user-port
 my $SLAVE_COUNT = 8;            # how many slaves to fork
 my $MAX_PER_SLAVE = 20;         # how many transactions per slave
 
-my $CERT = abs_path(".")."/certs/cert.pem";
-die "cant locate SSL certificate file: $CERT - $!\n" unless -f $CERT;
-my $KEY  = abs_path(".")."/certs/key.pem";
-die "cant locate SSL key file: $KEY - $!\n" unless -f $KEY;
+my $CERT_PATH = abs_path(".")."/certs";
 
 ### main
 warn("running version ", $VERSION);
@@ -146,10 +143,29 @@ sub handle_one_connection {     # return void
     $response->request($request);
     $handle->send_response($response);
     my $myurl = $request->url;
+    my $host = $myurl;
+    $host =~ s%http://%%;
+    $host =~ s%https://%%;
+    $host =~ s%:.*%%;
+    $host =~ s%/.*%%;
+    my $cert = "$CERT_PATH/$host.cert";
+    my $key = "$CERT_PATH/$host.key";
+    if (! -f $cert || ! -f $key)
+    {
+      print "Will need to generate certificate for host $host\n";
+      $cert="$CERT_PATH/cert.pem";
+      $key="$CERT_PATH/key.pem";
+      #generate_host_cert($host);
+    }
+    else
+    {
+      print "Use previously generated cert for host $host\n";
+    }
+    
     my $s = IO::Socket::SSL::socket_to_SSL($handle,
                                            SSL_server => 1,
-                                           SSL_key_file => $KEY,
-                                           SSL_cert_file => $CERT,
+                                           SSL_key_file => $key,
+                                           SSL_cert_file => $cert,
 					   );
 
     bless($handle, "MyHTTP::Daemon::ClientConn");
@@ -201,6 +217,14 @@ sub fetch_request {             # return HTTP::Response
     warn("processing url is $url") if $LOG_TRAN;
     &fetch_validated_request($request);
   }
+}
+
+sub generate_host_cert
+{
+  my $hostname = shift;
+  print "Creating cert for host $hostname\n\n";
+
+  # TODO: Use OpenCA::OpenSSL to generate cert
 }
 
 BEGIN {                         # local static block
