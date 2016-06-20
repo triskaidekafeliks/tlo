@@ -25,9 +25,9 @@ $SIG{__DIE__} = sub { die prefix @_ };
 ### logging flags
 my $LOG_PROC = 1;               # begin/end of processes
 my $LOG_TRAN = 1;               # begin/end of each transaction
-my $LOG_REQ_HEAD = 1;           # detailed header of each request
+my $LOG_REQ_HEAD = 0;           # detailed header of each request
 my $LOG_REQ_BODY = 0;           # header and body of each request
-my $LOG_RES_HEAD = 1;           # detailed header of each response
+my $LOG_RES_HEAD = 0;           # detailed header of each response
 my $LOG_RES_BODY = 0;           # header and body of each response
 my $LWP_DEBUG = 0;              # set on full LWP Debuging
 
@@ -187,6 +187,8 @@ sub handle_one_connection {     # return void
     $request->uri("https://$req".$q);
   }
 
+  warn "Fetching URL: " . $request->uri() . "\n";
+
   my $response = &fetch_request($request);
   warn "response code:".$response->code()."\n";
   warn "response message:".$response->message()."\n\n\n\n\n";
@@ -250,6 +252,7 @@ BEGIN {                         # local static block
       $agent;
     };
     
+    warn("fetch URL: " . $request->url . "\n");
     warn("fetch: <<<\n", $request->headers_as_string, "\n>>>")
       if $LOG_REQ_HEAD and not $LOG_REQ_BODY;
     warn("fetch: <<<\n", $request->as_string, "\n>>>")
