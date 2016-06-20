@@ -291,11 +291,12 @@ function start_cadaver
       zone_name="Asylum"
       ;;
 
-    Unknown_86_1)
+    Shepherd)
       zone_name="Asylum"
       ;;
-    Unknown_86_2)
+    Paramedics)
       zone_name="Asylum"
+      drops_gear=0
       ;;
 
     Unknown_90_1)
