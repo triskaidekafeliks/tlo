@@ -82,6 +82,16 @@ interrupt_actions+=('
     sleep 20;
     xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 1 sleep 0.1 click 5 click 5;
 "')
+
+interrupt_actions+=('
+  condition="test_game_contents social_network_failure.png $TEST_SOCIAL_NETWORK_FAILURE"
+  message="Restart after social network failure"
+  action="
+    xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 1 key ctrl+F5;
+    sleep 20;
+    xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 1 sleep 0.1 click 5 click 5
+"')
+
 interrupt_actions+=('
   condition="test_game_contents send_golden_strongbox.png $TEST_SEND_STRONGBOX"
   message="Sending golden strongboxes"
@@ -216,7 +226,7 @@ interrupt_actions+=('
   action="
     xdo_and_return mousemove $CLICK_FLASH_CRASH_RELOAD click 1 sleep 0.1;
     xdo_and_return key ctrl+Page_Up sleep 0.5 mousemove $CLICK_FLASH_CRASH_RELOAD click 1 sleep 0.1;
-    sleep 20;
+    sleep 60;
     xdo_and_return mousemove $CLICK_MAA_CLOSE_MESSAGES click 1 sleep 1;
     xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 1 sleep 0.1 key Down key Down key Down key Down sleep 0.1;
     xdo_and_return mousemove $CLICK_MAA_DISMISS_NEWS click 1 sleep 0.1;
