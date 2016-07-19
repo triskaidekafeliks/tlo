@@ -93,6 +93,15 @@ interrupt_actions+=('
 "')
 
 interrupt_actions+=('
+  condition="test_game_contents connection_cocked_up.png $TEST_CONNECTION_FUBAR"
+  message="Restart after connection outage"
+  action="
+    xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 1 key ctrl+F5;
+    sleep 20;
+    xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 1 sleep 0.1 click 5 click 5
+"')
+
+interrupt_actions+=('
   condition="test_game_contents send_golden_strongbox.png $TEST_SEND_STRONGBOX"
   message="Sending golden strongboxes"
   action="xdo_and_return mousemove $CLICK_SEND_STRONGBOX click 1"
