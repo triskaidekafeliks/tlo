@@ -12,7 +12,12 @@ start_battle_actions=()
 in_select_map=0
 present_zone=-99
 
-# Initiate the desired cadaver fight (adjust here for new cadavers)
+function zone_reset
+{
+  current_zone_index=0
+  in_select_map=0
+  present_zone=-99
+}
 
 function deduce_zone_index
 {
