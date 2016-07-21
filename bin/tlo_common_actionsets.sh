@@ -257,10 +257,16 @@ interrupt_actions+=('
   action="xdo_and_return mousemove $CLICK_CADAVER_ALREADY_DEFEATED click 1"
 ')
 
+interrupt_actions+=('
+  condition="test_game_contents no_opponents.png $TEST_NO_OPPONENTS"
+  message="Found no opponents, boohoo"
+  action="xdo_and_return mousemove $CLICK_DISMISS_NO_OPPONENTS click 1"
+')
+
 function refresh_game
 {
   xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 1 key ctrl+F5;
   sleep 20;
   xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 1 sleep 0.1 click 5 click 5
-  &zone_reset;
+  zone_reset;
 }
