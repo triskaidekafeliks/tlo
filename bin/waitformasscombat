@@ -12,12 +12,36 @@ then
   shift
 fi
 
-start_citadel_combats=0
+start_citadel_combats=""
 if [ "$1" == "--runcitadels" ]
 then
-  echo "Will start citadel fights"
-  start_citadel_combats=1
-  shift
+  citadel=$2
+  case $citadel in
+    Silkworm)
+      start_citadel_combats="$CLICK_CITADEL_SILKWORM"
+      ;;
+    Loaderbot)
+      start_citadel_combats="$CLICK_CITADEL_LOADERBOT"
+      ;;
+    Murrain)
+      start_citadel_combats="$CLICK_CITADEL_MURRAIN"
+      ;;
+    Zeus)
+      start_citadel_combats="$CLICK_CITADEL_PROJECT_ZEUS"
+      ;;
+    Board)
+      start_citadel_combats="$CLICK_CITADEL_EXEC_BOARD"
+      ;;
+    Eyepop)
+      start_citadel_combats="$CLICK_CITADEL_EYEPOP"
+      ;;
+    Kindred)
+      start_citadel_combats="$CLICK_CITADEL_KINDRED"
+      ;;
+  esac
+    
+  echo "Will start citadel fights at: $start_citadel_combats ($citadel)"
+  shift; shift
 fi
 
 idling_cadaver=$1
@@ -229,7 +253,7 @@ function populate_actions
   ')
 
   actions+=('
-    condition="(($start_citadel_combats)) && test_game_contents cit_ready.png $TEST_CITADEL_READY"
+    condition="[ -n \"$start_citadel_combats\" ] && test_game_contents cit_ready.png $TEST_CITADEL_READY"
     message="Opening citadel dialog on timer"
     action="xdo_and_return mousemove $CLICK_CITADEL_READY click 1"
   ')
@@ -262,11 +286,11 @@ function populate_actions
   # If that happens, then the mouse action will have no effect, and the next turn of
   # the loop will find the Join button instead.
   actions+=('
-    condition="(($start_citadel_combats)) && test_game_contents citadel_attack_button.png $TEST_CITADEL_ATTACK"
+    condition="[ -n \"$start_citadel_combats\" ] && test_game_contents citadel_attack_button.png $TEST_CITADEL_ATTACK"
     message="Prepping citadel"
     action="
         t_echo \"Pausing before citadel launch...\";
-        xdo_and_return mousemove $CLICK_CITADEL_DROPDOWN click 1 sleep 0.5 mousemove $CLICK_CITADEL_MURRAIN click 1 sleep 0.5 mousemove $CLICK_CITADEL_ATTACK click 1
+        xdo_and_return mousemove $CLICK_CITADEL_DROPDOWN click 1 sleep 0.5 mousemove $start_citadel_combats click 1 sleep 0.5 mousemove $CLICK_CITADEL_ATTACK click 1
   "')
 
   # If nothing else doing, go start a regular cadaver combat
