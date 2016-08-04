@@ -78,21 +78,21 @@ interrupt_actions+=('
   condition="test_game_contents strongbox_no_recips.png $TEST_STRONGBOX_TO_NOONE"
   message="Restart after duff strongbox popup"
   action="
-    &refresh_game;
+    refresh_game;
 "')
 
 interrupt_actions+=('
   condition="test_game_contents social_network_failure.png $TEST_SOCIAL_NETWORK_FAILURE"
   message="Restart after social network failure"
   action="
-    &refresh_game;
+    refresh_game;
 "')
 
 interrupt_actions+=('
   condition="test_game_contents connection_cocked_up.png $TEST_CONNECTION_FUBAR"
   message="Restart after connection outage"
   action="
-    &refresh_game;
+    refresh_game;
 "')
 
 interrupt_actions+=('
@@ -265,8 +265,8 @@ interrupt_actions+=('
 
 function refresh_game
 {
-  xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 1 key ctrl+F5;
-  sleep 20;
+  xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 1 key ctrl+F5
+  sleep 20
   xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 1 sleep 0.1 click 5 click 5
-  zone_reset;
+  zone_reset
 }
