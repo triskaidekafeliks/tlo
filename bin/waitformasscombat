@@ -12,6 +12,14 @@ then
   shift
 fi
 
+start_citadel_combats=0
+if [ "$1" == "--runcitadels" ]
+then
+  echo "Will start citadel fights"
+  start_citadel_combats=1
+  shift
+fi
+
 idling_cadaver=$1
 idling_count=0
 
@@ -19,8 +27,6 @@ game_left=0
 game_top=146
 game_width=1556
 game_height=862
-
-start_citadel_combats=0
 
 currenttime=$(date +%s)
 flightstime=$currenttime
