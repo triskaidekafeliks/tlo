@@ -189,6 +189,7 @@ function populate_actions
     condition="test_game_contents buy_5_button.png $TEST_BUY_5_BANDAGE_DEAD"
     message="Clicking away from deathly heal options"
     action="xdo_and_return mousemove $CLICK_ATTACK_BOSS click 1"
+  ')
 
   actions+=('
     condition="test_game_contents cadaver_attack.png $TEST_CADAVER_ATTACK_GEARDROP"
