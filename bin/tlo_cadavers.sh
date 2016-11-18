@@ -153,6 +153,8 @@ function start_cadaver
   click_location=""
   swipe_start=""
   swipe_end=""
+  swipe2_start=""
+  swipe2_end=""
 
   case $cadaver in
     Cook)
@@ -304,10 +306,10 @@ function start_cadaver
       drops_gear=0
       ;;
 
-    Unknown_90_1)
+    Experiment7)
       zone_name="Asylum"
       ;;
-    Unknown_90_2)
+    Neurosurgeon)
       zone_name="Asylum"
       ;;
 
@@ -321,6 +323,8 @@ function start_cadaver
   then
     swipe_start=$(eval "echo \$${cadaver^^}_SWIPE_START")
     swipe_end=$(eval "echo \$${cadaver^^}_SWIPE_END")
+    swipe2_start=$(eval "echo \$${cadaver^^}_SWIPE2_START")
+    swipe2_end=$(eval "echo \$${cadaver^^}_SWIPE2_END")
     click_location=$(eval "echo \$${cadaver^^}_LOCATION")
     starting_cadaver=1
     clearwait=0

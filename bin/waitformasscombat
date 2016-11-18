@@ -45,7 +45,7 @@ then
 fi
 
 idling_cadaver=$1
-idling_count=0
+idling_count=1
 
 game_left=0
 game_top=146
@@ -115,14 +115,14 @@ function populate_actions
                (test_game_contents home_flag.png $TEST_HOME_CENTRED ||
                 test_game_contents home_flag_shrouded.png $TEST_HOME_CENTRED)"
     sqmessage="Bringing cadaver location into view"
-    action="xdo_and_return mousemove $swipe_start mousedown 1 mousemove $swipe_end mouseup 1; unset swipe_start"
+    action="xdo_and_return mousemove $swipe_start mousedown 1 mousemove $swipe_end mouseup 1; unset swipe_start; if [ -n \"$swipe2_start\" ]; then echo Swipe from $swipe2_start to $swipe2_end; xdo_and_return mousemove $swipe2_start mousedown 1 mousemove $swipe2_end mouseup 1; unset swipe2_start; fi; sleep 0.5"
   ')
 
   actions+=('
     condition="[ -n \"$click_location\" ] &&
                test_game_contents outofmission_check.png $TEST_OUT_OF_MISSION"
     sqmessage="Clicking cadaver location"
-    action="xdo_and_return mousemove $click_location click 1; unset click_location"
+    action="xdo_and_return mousemove $click_location click 1; unset click_location; ((idling_count++))"
   ')
 
   actions+=('
@@ -307,7 +307,7 @@ function populate_actions
   # running through the whole gamut of interrupt actions.
   actions+=('
     condition="(($outofmission)) && [ -n \"$idling_cadaver\" ]"
-    message="Starting new idling cadaver $idling_cadaver \$((++idling_count))"
+    message="Starting new idling cadaver $idling_cadaver \$idling_count"
     action="start_cadaver $idling_cadaver"
   ')
 
