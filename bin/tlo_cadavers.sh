@@ -313,6 +313,13 @@ function start_cadaver
       zone_name="Asylum"
       ;;
 
+    Balthazar)
+      zone_name="Archipelago"
+      ;;
+    SeaDemon)
+      zone_name="Archipelago"
+      ;;
+
     *)
       t_echo "Haven't coordinated cadaver: $1"
       return 1
