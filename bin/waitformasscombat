@@ -299,6 +299,12 @@ function populate_actions
         xdo_and_return mousemove $CLICK_CITADEL_DROPDOWN click 1 sleep 0.5 mousemove $start_citadel_combats click 1 sleep 0.5 mousemove $CLICK_CITADEL_ATTACK click 1
   "')
 
+  actions+=('
+    condition="[ -z \"$start_citadel_combats\" ] && test_game_contents citadel_attack_button.png $TEST_CITADEL_ATTACK"
+    message="Forgoing citadel"
+    action="xdo_and_return mousemove $CLICK_LEAVE_CITADEL click 1"
+  ')
+
   # If nothing else doing, go start a regular cadaver combat
   # Incrementing the count in the message like this is a bit icky, but provides a
   # more accurate count compared with incrementing it in action.
