@@ -2,15 +2,20 @@
 
 interrupt_actions=()
 
+#interrupt_actions+=('
+#  condition="test_game_contents free_gifts.png $TEST_FREE_GIFTS"
+#  message="Gifting grenades"
+#  action="xdo_and_return mousemove $CLICK_SELECT_GRENADES click 1"
+#')
+#interrupt_actions+=('
+#  condition="test_game_contents send_gift.png $TEST_SEND_GIFT"
+#  message="Sending the gifts"
+#  action="xdo_and_return mousemove $CLICK_SEND_GIFTS click 1"
+#')
 interrupt_actions+=('
   condition="test_game_contents free_gifts.png $TEST_FREE_GIFTS"
-  message="Gifting grenades"
-  action="xdo_and_return mousemove $CLICK_SELECT_GRENADES click 1"
-')
-interrupt_actions+=('
-  condition="test_game_contents send_gift.png $TEST_SEND_GIFT"
-  message="Sending the gifts"
-  action="xdo_and_return mousemove $CLICK_SEND_GIFTS click 1"
+  message="Skipping gifting"
+  action="xdo_and_return mousemove $CLICK_CLOSE_GIFTING click 1"
 ')
 
 # A cadaver fight finished.  Need to check for this in addition to the
