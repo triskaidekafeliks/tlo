@@ -100,10 +100,15 @@ interrupt_actions+=('
     refresh_game;
 "')
 
+#interrupt_actions+=('
+#  condition="test_game_contents send_golden_strongbox.png $TEST_SEND_STRONGBOX"
+#  message="Sending golden strongboxes"
+#  action="xdo_and_return mousemove $CLICK_SEND_STRONGBOX click 1"
+#')
 interrupt_actions+=('
   condition="test_game_contents send_golden_strongbox.png $TEST_SEND_STRONGBOX"
-  message="Sending golden strongboxes"
-  action="xdo_and_return mousemove $CLICK_SEND_STRONGBOX click 1"
+  message="Not sending golden strongboxes"
+  action="xdo_and_return mousemove $CLICK_CLOSE_STRONGBOX click 1"
 ')
 
 interrupt_actions+=('
