@@ -238,15 +238,21 @@ interrupt_actions+=('
   finalaction=1
   action="
     xdo_and_return mousemove $CLICK_FLASH_CRASH_RELOAD click 1 sleep 0.1;
-    xdo_and_return key ctrl+Page_Up sleep 0.5 mousemove $CLICK_FLASH_CRASH_RELOAD click 1 sleep 0.1;
     sleep 60;
-    xdo_and_return mousemove $CLICK_MAA_CLOSE_MESSAGES click 1 sleep 1;
-    xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 1 sleep 0.1 key Down key Down key Down key Down sleep 0.1;
-    xdo_and_return mousemove $CLICK_MAA_DISMISS_NEWS click 1 sleep 0.1;
-    xdo_and_return mousemove $CLICK_MAA_DISMISS_GOLD_SALE click 1 sleep 0.1;
-    xdo_and_return mousemove $CLICK_MAA_DISMISS_NEWS click 1 sleep 0.1;
-    xdo_and_return key ctrl+Page_Down sleep 0.1;
-    xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 1 sleep 0.1 click 5 click 5;
+"')
+
+interrupt_actions+=('
+  conditions="test_game_contents fb_header.png $TEST_FB_HEADER"
+  message="Do first adjustment scroll..."
+  action="
+    xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 5;
+"')
+
+interrupt_actions+=('
+  conditions="test_game_contents like_the_game.png $TEST_LIKE_THE_GAME"
+  message="Do second adjustment scroll..."
+  action="
+    xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 5;
 "')
 
 interrupt_actions+=('
