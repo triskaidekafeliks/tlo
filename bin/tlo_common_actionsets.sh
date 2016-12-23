@@ -82,23 +82,20 @@ interrupt_actions+=('
 interrupt_actions+=('
   condition="test_game_contents strongbox_no_recips.png $TEST_STRONGBOX_TO_NOONE"
   message="Restart after duff strongbox popup"
-  action="
-    refresh_game;
-"')
+  action="refresh_game"
+')
 
 interrupt_actions+=('
   condition="test_game_contents social_network_failure.png $TEST_SOCIAL_NETWORK_FAILURE"
   message="Restart after social network failure"
-  action="
-    refresh_game;
-"')
+  action="refresh_game"
+')
 
 interrupt_actions+=('
   condition="test_game_contents connection_cocked_up.png $TEST_CONNECTION_FUBAR"
   message="Restart after connection outage"
-  action="
-    refresh_game;
-"')
+  action="refresh_game"
+')
 
 #interrupt_actions+=('
 #  condition="test_game_contents send_golden_strongbox.png $TEST_SEND_STRONGBOX"
@@ -238,22 +235,20 @@ interrupt_actions+=('
   finalaction=1
   action="
     xdo_and_return mousemove $CLICK_FLASH_CRASH_RELOAD click 1 sleep 0.1;
-    sleep 60;
+    sleep 60
 "')
 
 interrupt_actions+=('
-  conditions="test_game_contents fb_header.png $TEST_FB_HEADER"
+  condition="test_game_contents fb_header.png $TEST_FB_HEADER"
   message="Do first adjustment scroll..."
-  action="
-    xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 5;
-"')
+  action="xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 5"
+')
 
 interrupt_actions+=('
-  conditions="test_game_contents like_the_game.png $TEST_LIKE_THE_GAME"
+  condition="test_game_contents like_the_game.png $TEST_LIKE_THE_GAME"
   message="Do second adjustment scroll..."
-  action="
-    xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 5;
-"')
+  action="xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 5"
+')
 
 interrupt_actions+=('
   condition="test_game_contents connection_lost.png $TEST_CONNECTION_LOST"
