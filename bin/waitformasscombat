@@ -326,6 +326,12 @@ function populate_actions
 
   actions+=("${interrupt_actions[@]}")
 
+  actions+=('
+    condition="true"
+    message="Scrolling back up"
+    action="xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 4"
+  ')
+
 # TODO: Look out for social network init failure message?
 }
 
