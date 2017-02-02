@@ -240,13 +240,13 @@ interrupt_actions+=('
 
 interrupt_actions+=('
   condition="test_game_contents fb_header.png $TEST_FB_HEADER"
-  message="Do first adjustment scroll..."
+  sqmessage="Do first adjustment scroll..."
   action="xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 5"
 ')
 
 interrupt_actions+=('
   condition="test_game_contents like_the_game.png $TEST_LIKE_THE_GAME"
-  message="Do second adjustment scroll..."
+  sqmessage="Do second adjustment scroll..."
   action="xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 5"
 ')
 

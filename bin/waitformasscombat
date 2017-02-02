@@ -328,7 +328,7 @@ function populate_actions
 
   actions+=('
     condition="true"
-    message="Scrolling back up"
+    sqmessage="Scrolling back up"
     action="xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 4"
   ')
 
