@@ -277,7 +277,7 @@ interrupt_actions+=('
 function refresh_game
 {
   xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 1 key ctrl+F5
-  sleep 20
+  sleep 30
   xdo_and_return mousemove $CLICK_RIGHT_OF_GAME_AREA click 1 sleep 0.1 click 5 click 5
   zone_reset
 }
