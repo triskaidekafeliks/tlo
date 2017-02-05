@@ -243,6 +243,12 @@ function populate_actions
     action="xdo_and_return mousemove $CLICK_MC_APPLY click 1"
   ')
 
+  actions+=('
+    condition="test_game_contents mass_suspended.png $TEST_MC_SUSPENDED"
+    message="Suspended from Mass Combat"
+    action="xdo_and_return mousemove $CLICK_MC_SUSPENDED click 1"
+  ')
+
   # TODO: Get rid of this?  Check on idling cadaver that we're outofmission should be sufficient?
   # Do nothing while waiting for Mass Combat to start
   #actions+=('
